@@ -1,6 +1,6 @@
 import express from "express";
 import { Router, Request, Response } from "express";
-import { getAllUsers, deleteUser } from "../controllers/users";
+import { getAllUsers, deleteUser,updateUser } from "../controllers/users";
 import { isAuthenticated,isOwner } from "../middlewares";
 
 export default (router: Router): void => {
@@ -16,6 +16,17 @@ export default (router: Router): void => {
     isAuthenticated,isOwner,
     (req: Request, res: Response): void => {
       deleteUser(req, res).catch((error: Error): void => {
+        console.error(error);
+        res.sendStatus(400);
+      });
+    }
+  );
+
+  router.patch(
+    "/users/:id",
+    isAuthenticated,isOwner,
+    (req: Request, res: Response): void => {
+      updateUser(req, res).catch((error: Error): void => {
         console.error(error);
         res.sendStatus(400);
       });
