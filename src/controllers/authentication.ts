@@ -1,6 +1,6 @@
 import express from 'express';
 import { Request, Response } from 'express';
-import { object, string } from 'joi'; // Importing Joi for input validation
+import Joi from 'joi'; // Importing Joi for input validation
 import { getUserByEmail, createUser } from '../db/users';
 import { authentication, random } from '../helpers';
 
@@ -10,10 +10,10 @@ const HTTP_STATUS = {
 };
 
 // Define the schema for request body validation using Joi
-const registerSchema = object({
-  email: string().email().required(),
-  password: string().required(),
-  username: string().required(),
+const registerSchema = Joi.object({
+  email: Joi.string().email().required(),
+  password: Joi.string().required(),
+  username: Joi.string().required(),
 });
 
 export const register = async (req: Request, res: Response) => {
