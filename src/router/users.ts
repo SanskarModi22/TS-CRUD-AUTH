@@ -1,6 +1,6 @@
 import express from "express";
 import { Router, Request, Response } from "express";
-import { getAllUsers } from "../controllers/users";
+import { getAllUsers, deleteUser } from "../controllers/users";
 import { isAuthenticated } from "../middlewares";
 
 export default (router: Router): void => {
@@ -10,4 +10,15 @@ export default (router: Router): void => {
       res.sendStatus(400);
     });
   });
+
+  router.delete(
+    "/users/:id",
+    isAuthenticated,
+    (req: Request, res: Response): void => {
+      deleteUser(req, res).catch((error: Error): void => {
+        console.error(error);
+        res.sendStatus(400);
+      });
+    }
+  );
 };
