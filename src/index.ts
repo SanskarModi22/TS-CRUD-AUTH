@@ -4,6 +4,10 @@ import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import compression from "compression";
 import cors from "cors";
+import mongoose from "mongoose";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const app = express();
 app.use(
@@ -21,3 +25,9 @@ const server = http.createServer(app);
 server.listen(8000, () => {
   console.log("Server running on http://localhost:8000/");
 });
+
+const MONGO_URL = process.env.MONGO_URL;
+mongoose.Promise = Promise;
+mongoose.connect(MONGO_URL);
+mongoose.connection.on("connection", (s) => console.log("Connected"));
+mongoose.connection.on("error", (error: Error) => console.log(error));
