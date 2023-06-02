@@ -1,7 +1,7 @@
 import mongoose, { Document, Model } from 'mongoose';
 
 // User Interface
-interface User extends Document {
+export interface User extends Document {
   _id: string;
   email: string;
   username: string;
@@ -33,8 +33,9 @@ const UserModel: Model<User> = mongoose.model<User>('User', UserSchema);
 export const getUsers = (): Promise<User[]> => UserModel.find().exec();
 
 // Function to find a user by their email
-export const getUserByEmail = (email: string): Promise<User | null> =>
-  UserModel.findOne({ email }).exec();
+export const getUserByEmail = (email: string) => UserModel.findOne({ email });
+
+
 
 // Function to find a user by their session token
 export const getUserBySessionToken = (sessionToken: string): Promise<User | null> =>
